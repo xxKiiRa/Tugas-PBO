@@ -8,6 +8,7 @@ public class RestaurantOrderSystem {
         List<Menu> menuList = new ArrayList<>();
         List<Order> orderList = new ArrayList<>();
 
+        // Tambah beberapa item menu
         menuList.add(new Food("Nasi Goreng", 20000));
         menuList.add(new Drink("Es Teh", 5000));
         menuList.add(new Food("Mie Goreng", 15000));
@@ -16,7 +17,8 @@ public class RestaurantOrderSystem {
         while (true) {
             System.out.println("1. Tambah Pesanan");
             System.out.println("2. Tampilkan Semua Pesanan");
-            System.out.println("3. Keluar");
+            System.out.println("3. Bayar Pesanan");
+            System.out.println("4. Keluar");
             System.out.print("Pilih opsi: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -64,6 +66,26 @@ public class RestaurantOrderSystem {
                     break;
 
                 case 3:
+                    System.out.print("Masukkan ID pesanan yang akan dibayar: ");
+                    int orderId = scanner.nextInt();
+                    Order orderToPay = null;
+
+                    // Cari pesanan berdasarkan ID
+                    for (Order order : orderList) {
+                        if (order.getOrderId() == orderId) {
+                            orderToPay = order;
+                            break;
+                        }
+                    }
+
+                    if (orderToPay != null) {
+                        orderToPay.payOrder();
+                    } else {
+                        System.out.println("Pesanan dengan ID tersebut tidak ditemukan.");
+                    }
+                    break;
+
+                case 4:
                     System.out.println("Terima kasih!");
                     scanner.close();
                     return;
