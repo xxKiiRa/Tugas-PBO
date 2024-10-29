@@ -8,6 +8,7 @@ public class Order {
     private OrderType orderType;
     private List<Menu> menuItems;
     private boolean isCompleted;
+    private boolean isPaid; // Menyimpan status pembayaran
 
     public Order(Customer customer, OrderType orderType) {
         this.orderId = ++orderCount;
@@ -15,6 +16,7 @@ public class Order {
         this.orderType = orderType;
         this.menuItems = new ArrayList<>();
         this.isCompleted = false;
+        this.isPaid = false; // Inisialisasi status pembayaran sebagai belum dibayar
     }
 
     public int getOrderId() {
@@ -29,6 +31,10 @@ public class Order {
         isCompleted = completed;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
     public void addMenuItem(Menu menu) {
         menuItems.add(menu);
     }
@@ -39,6 +45,17 @@ public class Order {
             total += menu.getPrice();
         }
         return total;
+    }
+
+    // Metode untuk pembayaran
+    public void payOrder() {
+        if (isPaid) {
+            System.out.println("Pesanan sudah dibayar.");
+        } else {
+            this.isPaid = true;
+            this.isCompleted = true; // Tandai pesanan selesai setelah dibayar
+            System.out.println("Pembayaran berhasil. Status pesanan: Success.");
+        }
     }
 
     public void displayOrderDetails() {
@@ -52,6 +69,6 @@ public class Order {
             menu.displayMenuType();
         }
         System.out.println("Total Price: Rp" + calculateTotalPrice());
-        System.out.println("Status: " + (isCompleted ? "Completed" : "In Progress"));
+        System.out.println("Status: " + (isPaid ? "Success (Paid)" : "In Progress"));
     }
 }
